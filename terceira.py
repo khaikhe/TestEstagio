@@ -1,25 +1,30 @@
 import json
 
-def calcular_faturamento(arquivo_json):
+def carregar_dados(arquivo_json):
     with open(arquivo_json, 'r') as file:
         dados = json.load(file)
+    return dados
 
-    valores = [item['valor'] for item in dados if item['valor'] > 0]
+def main():
+    dados = carregar_dados('faturamento.json')
     
-    if not valores:
-        return None, None, 0
-
-    menor_faturamento = min(valores)
-    maior_faturamento = max(valores)
-    media_mensal = sum(valores) / len(valores)
-
-    dias_acima_da_media = len([valor for valor in valores if valor > media_mensal])
     
-    return menor_faturamento, maior_faturamento, dias_acima_da_media
+    try:
+        dia_input = int(input("Digite o número do dia: ").strip())
+        
+        if 1 <= dia_input <= 31:
+            
+            dia_dados = [item for item in dados if item['dia'] == dia_input]
+            
+            if dia_dados:
+                print(f"Faturamento no dia {dia_input}: R${dia_dados[0]['valor']:.2f}")
+            else:
+                print("Dia não encontrado.")
+        else:
+            print("Número do dia inválido. Digite um número entre 1 e 31.")
+    
+    except ValueError:
+        print("Entrada inválida. Por favor, insira um número.")
 
-
-menor, maior, dias_acima_media = calcular_faturamento('faturamento.json')
-
-print(f"Menor valor de faturamento: R${menor:.2f}")
-print(f"Maior valor de faturamento: R${maior:.2f}")
-print(f"Número de dias com faturamento acima da média mensal: {dias_acima_media}")
+if __name__ == "__main__":
+    main()

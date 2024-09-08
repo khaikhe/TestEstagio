@@ -1,4 +1,4 @@
-# Dados do faturamento por estado
+
 faturamento = {
     'SP': 67836.43,
     'RJ': 36678.66,
@@ -13,17 +13,15 @@ def calcular_percentuais(faturamento):
     return percentuais
 
 def main():
-    # Calcular percentuais
     percentuais = calcular_percentuais(faturamento)
 
-    # Solicitar ao usuário o estado desejado
-    estado_input = input("Digite o estado que deseja ver o percentual (ex.: SP, RJ, MG, ES, Outros): ").strip().upper()
+    estado_input = input("Digite a UF Desejada: SP, RJ, MG, ES, Outros): ").strip().upper()
 
-    # Exibir resultado
+    
     if estado_input in percentuais:
-        print(f"Percentual de representação de {estado_input}: {percentuais[estado_input]:.2f}%")
+        print(f"Percentual {estado_input}: {percentuais[estado_input]:.2f}%")
     else:
-        print("Estado inválido ou não encontrado.")
+        print("Estado inválido ou não existe.")
 
 if __name__ == "__main__":
     main()
